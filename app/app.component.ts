@@ -1,16 +1,13 @@
 import {Component} from '@angular/core';
+import { OnInit } from '@angular/core';
 import {CreditCard} from './creditCard';
 import { CreditCardDetailComponent } from './credit-card-detail.component';
+import {CreditCardService} from './credit-card.service';
 
 
 @Component({
     selector: 'my-app',
     template: `<h1>{{title}}</h1>
-               <p *ngIf="creditCards.length > 3">There are many card holders!</p>
-               <p>CardHolders:</p>
-               <ul>
-               <li *ngFor="let creditCard of creditCards">{{ creditCard.cardHolder }} </li>
-               </ul>
                <h2>Credit Cards</h2>
                    <ul class="creditCards">
                        <li *ngFor="let creditCard of creditCards" [class.selected]="creditCard === selectedCreditCard" (click)="onSelect(creditCard)">
@@ -68,36 +65,32 @@ import { CreditCardDetailComponent } from './credit-card-detail.component';
     border-radius: 4px 0 0 4px;
   }
 
-`],directives: [CreditCardDetailComponent]
+`],directives: [CreditCardDetailComponent], providers: [CreditCardService]
 
 })
 
-export class AppComponent {
-  creditCards = CREDIT_CARDS;
-  title: string;
+export class AppComponent implements OnInit {
+  creditCards: CreditCard[];
+  title: 'Credit Cards';
   selectedCreditCard: CreditCard;
 
-  constructor() {
-    this.title = 'Credit Cards';
+  ngOnInit() {
+    this.getCreditCards();
+  }
+
+  constructor(private creditCardService: CreditCardService) {
+
   }
 
   onSelect(creditCard: CreditCard) {
     this.selectedCreditCard = creditCard;
   }
+
+  getCreditCards() {
+    this.creditCardService.getCreditCardsSlowly()
+          .then(creditCards => this.creditCards = creditCards);
+  }
+
 }
 
-var CREDIT_CARDS: CreditCard[] = [
-  { "id": 1, "cardHolder": "Mr. Nice1", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 2, "cardHolder": "Mr. Nice2", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 3, "cardHolder": "Mr. Nice3", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 4, "cardHolder": "Mr. Nice4", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 5, "cardHolder": "Mr. Nice5", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 6, "cardHolder": "Mr. Nice6", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 7, "cardHolder": "Mr. Nice7", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 8, "cardHolder": "Mr. Nice8", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 9, "cardHolder": "Mr. Nice9", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" :"55555" },
-  { "id": 10, "cardHolder": "Mr. Nice10", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" : "55555" },
-  { "id": 11, "cardHolder": "Mr. Nice11", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" :"55555" },
-  { "id": 12, "cardHolder": "Mr. Nice12", "cardNumber": "4111111111111111", "expirationDateAsMMYY" : "0819", "csc": "456", "zip" :"55555" }
-];
 
