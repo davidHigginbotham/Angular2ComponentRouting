@@ -15,4 +15,10 @@ export class CreditCardService {
         setTimeout(()=>resolve(CREDIT_CARDS), 2000) // 2 seconds
     );
   }
+
+  getCreditCard(id: number) {
+    return this.getCreditCards()
+      .then(creditCards => creditCards.filter(creditCard => creditCard.id === id)[0]);
+  }
+
 }

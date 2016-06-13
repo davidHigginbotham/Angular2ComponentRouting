@@ -1,19 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import {CreditCard} from './creditCard';
+import { RouteParams } from '@angular/router-deprecated';
+import {CreditCardService} from './credit-card.service';
 
 @Component({
   selector: 'credit-card-detail',
-  template: `<div *ngIf="creditCard">
-                   <h2>Card Holder: {{creditCard.cardHolder}}</h2>
-                   <div><label>id: </label>{{creditCard.id}}</div>
-                   <div>
-                       <label>Card Holder: </label>
-                       <input [(ngModel)]="creditCard.cardHolder" placeholder="cardHolder">
-                    </div>
-               </div>
-             `
+  templateUrl: 'app/credit-card-detail.component.html'
 })
-export class CreditCardDetailComponent {
-    @Input()
-    creditCard: CreditCard;
+
+export class CreditCardDetailComponent implements OnInit {
+  creditCard: CreditCard;
+
+  constructor(
+    private creditCardService: CreditCardService,
+    private routeParams: RouteParams) {
+  }
+
+  ngOnInit() {
+    let id = +this.routeParams.get('id');
+    this.creditCardService.getCreditCard(id).then(creditCard => this.creditCard = creditCard);
+  }
+
+  goBack() {
+    window.history.back();
+  }
+
+
 }
