@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router }            from '@angular/router-deprecated';
 import {CreditCard} from './creditCard';
 import { CreditCardDetailComponent } from './credit-card-detail.component';
 import {CreditCardService} from './credit-card.service';
@@ -12,9 +12,19 @@ import {CreditCardService} from './credit-card.service';
                    <ul class="creditCards">
                        <li *ngFor="let creditCard of creditCards" [class.selected]="creditCard === selectedCreditCard" (click)="onSelect(creditCard)">
                           <span class="detail">{{creditCard.id}}</span> {{creditCard.cardHolder}}
+                          <button class="delete-button" (click)="delete(creditCard, $event)">Delete</button>
                       </li>
                    </ul>
-                <credit-card-detail [creditCard]="selectedCreditCard"></credit-card-detail>
+                <button (click)="addCreditCard()">Add New Hero</button>
+                <div *ngIf="addingCreditCard">
+                    <credit-card-detail (close)="close($event)"></credit-card-detail>
+                </div>
+                <div *ngIf="selectedCreditCard">
+                <h2>
+               {{selectedCreditCard.cardHolder | uppercase}} is my credit card
+                </h2>
+                <button (click)="gotoDetail()">View Details</button>
+                </div>
                `,
   styles:[`
   .selected {
@@ -71,24 +81,53 @@ import {CreditCardService} from './credit-card.service';
 
 export class CreditCardsComponent implements OnInit {
   creditCards: CreditCard[];
-  title: 'Credit Cards';
   selectedCreditCard: CreditCard;
+  addingCreditCard = false;
+  error: any;
+  title: 'Credit Cards';
 
   ngOnInit() {
     this.getCreditCards();
   }
 
-  constructor(private creditCardService: CreditCardService) {
-
+  constructor(
+    private router: Router,
+    private creditCardService: CreditCardService) {
   }
 
   onSelect(creditCard: CreditCard) {
     this.selectedCreditCard = creditCard;
+    this.addingCreditCard = false;
   }
 
   getCreditCards() {
     this.creditCardService.getCreditCards()
           .then(creditCards => this.creditCards = creditCards);
+  }
+
+  addCreditCard() {
+    this.addingCreditCard = true;
+    this.selectedCreditCard = null;
+  }
+
+  close(savedCreditCard: CreditCard) {
+    this.addingCreditCard = false;
+    if (savedCreditCard) { this.getCreditCards(); }
+  }
+
+  delete(creditCard: CreditCard, event: any) {
+    event.stopPropagation();
+    this.creditCardService
+      .delete(creditCard)
+      .then(res => {
+        this.creditCards = this.creditCards.filter(h => h !== creditCard);
+        if (this.selectedCreditCard === creditCard) { this.selectedCreditCard = null; }
+      })
+      .catch(error => this.error = error); // TODO: Display error message
+  }
+
+  gotoDetail() {
+    this.router.navigate(['CreditCardDetail', { id: this.selectedCreditCard.id }]);
   }
 
 }
