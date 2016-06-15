@@ -1,8 +1,11 @@
 import {Component} from '@angular/core';
 import {CreditCardsComponent} from './credit-cards.component';
+import {CustomersComponent} from './customers.component';
 import {DashboardComponent} from './dashboard.component';
 import {CreditCardService} from './credit-card.service';
+import {CustomerService} from './customer.service';
 import {CreditCardDetailComponent} from './credit-card-detail.component';
+import {CustomerDetailComponent} from './customer-detail.component';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 
 
@@ -11,15 +14,16 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router
   template: `  <h1>{{title}}</h1>
                <nav>
                <a [routerLink]="['Dashboard']">Dashboard</a>
-               <a [routerLink]="['CreditCards']">CreditCards</a>
+               <a [routerLink]="['Customers']">Customers</a>
                </nav>
                <router-outlet></router-outlet>
-               <credit-cards></credit-cards>
+               <customers></customers>
              `,
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS,
-    CreditCardService
+    CreditCardService,
+    CustomerService
   ]
 })
 
@@ -40,6 +44,16 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router
     path: '/detail/:id',
     name: 'CreditCardDetail',
     component: CreditCardDetailComponent
+  },
+  {
+    path: '/customers',
+    name: 'Customers',
+    component: CustomersComponent
+  },
+  {
+    path: '/customer-detail/:id',
+    name: 'CustomerDetail',
+    component: CustomerDetailComponent
   },
 
 ])

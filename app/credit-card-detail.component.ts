@@ -34,7 +34,7 @@ export class CreditCardDetailComponent implements OnInit {
     this.creditCardService
       .save(this.creditCard)
       .then(creditCard => {
-        this.creditCard = creditCard; // saved hero, w/ id if new
+        this.creditCard = creditCard;
         this.goBack(creditCard);
       })
       .catch(error => this.error = error); // TODO: Display error message

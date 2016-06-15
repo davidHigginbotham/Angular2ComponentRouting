@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-//import {CREDIT_CARDS} from './mock-credit-cards';
 import {CreditCard} from './creditCard';
-//Needed to convert an Observable to a promise
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()

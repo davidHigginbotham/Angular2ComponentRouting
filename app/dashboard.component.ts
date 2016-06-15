@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
-import {CreditCard} from './creditCard';
-import {CreditCardService} from './credit-card.service';
+import {Customer} from './customer';
+import {CustomerService} from './customer.service';
 
 @Component({
   selector: 'my-dashboard',
@@ -11,19 +11,19 @@ import {CreditCardService} from './credit-card.service';
 })
 
 export class DashboardComponent implements OnInit {
-  creditCards: CreditCard[] = [];
+  customers: Customer[] = [];
 
   constructor(
     private router: Router,
-    private creditCardService: CreditCardService) { }
+    private customerService: CustomerService) { }
 
   ngOnInit() {
-    this.creditCardService.getCreditCards()
-      .then(creditCards => this.creditCards = creditCards.slice(1,5));
+    this.customerService.getCustomers()
+      .then(customers => this.customers = customers.slice(1,5));
   }
 
-  gotoDetail(creditCard: CreditCard) {
-    let link = ['CreditCardDetail', { id: creditCard.id }];
+  gotoDetail(customer: Customer) {
+    let link = ['CustomerDetail', { id: customer.id }];
     this.router.navigate(link);
   }
 

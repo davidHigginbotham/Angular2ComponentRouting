@@ -15,7 +15,7 @@ import {CreditCardService} from './credit-card.service';
                           <button class="delete-button" (click)="delete(creditCard, $event)">Delete</button>
                       </li>
                    </ul>
-                <button (click)="addCreditCard()">Add New Hero</button>
+                <button (click)="addCreditCard()">Add New Credit Card</button>
                 <div *ngIf="addingCreditCard">
                     <credit-card-detail (close)="close($event)"></credit-card-detail>
                 </div>

@@ -1,0 +1,23 @@
+<div *ngIf="customer">
+  <h2>Customer: {{customer.firstName}}  {{customer.lastName}}</h2>
+  <div><label>id: </label>{{customer.id}}</div>
+  <div>
+    <label>First Name: </label>
+    <input [(ngModel)]="customer.firstName" placeholder="cardHolder">
+  </div>
+  <div>
+    <label>Last Name: </label>
+    <input [(ngModel)]="customer.lastName" placeholder="cardHolder">
+  </div>
+  <!--TODO show cards associated with customer -->
+  <h3>Credit Cards</h3>
+  <div class="grid grid-pad">
+    <div *ngFor="let creditCard of customer.creditCards" class="col-1-4">
+      <div class="module customer">
+        <h4>{{creditCard.cardNumber}} {{creditCard.expirationDateAsMMYY}} {{creditCard.zip}}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<button (click)="goBack()">Back</button>
+<button (click)="save()">Save</button>
