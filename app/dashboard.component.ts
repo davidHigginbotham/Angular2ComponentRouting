@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
-
 import {Customer} from './customer';
 import {CustomerService} from './customer.service';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 
 @Component({
+  moduleId: module.id,
   selector: 'my-dashboard',
-  templateUrl: 'app/dashboard.component.html',
+  templateUrl: 'dashboard.component.html',
+  directives: [ROUTER_DIRECTIVES]
 
 })
 
@@ -14,18 +15,11 @@ export class DashboardComponent implements OnInit {
   customers: Customer[] = [];
 
   constructor(
-    private router: Router,
     private customerService: CustomerService) { }
 
   ngOnInit() {
     this.customerService.getCustomers()
       .then(customers => this.customers = customers.slice(1,5));
   }
-
-  gotoDetail(customer: Customer) {
-    let link = ['CustomerDetail', { id: customer.id }];
-    this.router.navigate(link);
-  }
-
 }
 

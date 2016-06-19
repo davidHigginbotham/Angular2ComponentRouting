@@ -6,15 +6,15 @@ import {CreditCardService} from './credit-card.service';
 import {CustomerService} from './customer.service';
 import {CreditCardDetailComponent} from './credit-card-detail.component';
 import {CustomerDetailComponent} from './customer-detail.component';
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
-
+import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
 
 @Component({
+  moduleId: module.id,
   selector: 'payment-processing',
   template: `  <h1>{{title}}</h1>
                <nav>
-               <a [routerLink]="['Dashboard']">Dashboard</a>
-               <a [routerLink]="['Customers']">Customers</a>
+               <a [routerLink]="['/dashboard']">Dashboard</a>
+               <a [routerLink]="['/customers']">Customers</a>
                </nav>
                <router-outlet></router-outlet>
                <customers></customers>
@@ -27,32 +27,18 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router
   ]
 })
 
-@RouteConfig([
-  {
-    path: '/credit-cards',
-    name: 'CreditCards',
-    component: CreditCardsComponent
-  },
+@Routes([
   {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: DashboardComponent,
-    useAsDefault: true
-  },
-
-  {
-    path: '/detail/:id',
-    name: 'CreditCardDetail',
-    component: CreditCardDetailComponent
+    component: DashboardComponent
+    //useAsDefault: true
   },
   {
     path: '/customers',
-    name: 'Customers',
     component: CustomersComponent
   },
   {
     path: '/customer-detail/:id',
-    name: 'CustomerDetail',
     component: CustomerDetailComponent
   },
 

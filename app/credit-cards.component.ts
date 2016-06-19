@@ -6,6 +6,7 @@ import {CreditCardService} from './credit-card.service';
 
 
 @Component({
+    moduleId: module.id,
     selector: 'credit-cards',
     template: `<h1>{{title}}</h1>
                <h2>Credit Cards</h2>

@@ -6,3 +6,4 @@ This project is being used to learn Angular 2. The domain will be payment proces
 
 1. Started with the Angular 2 Quick Start quide. https://angular.io/docs/ts/latest/quickstart.html
 2. Working through Angular 2 tutorial.
+3. Converted deprecated-router to new router. Dashboard and Customer components only

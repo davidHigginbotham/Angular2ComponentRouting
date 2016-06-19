@@ -1,33 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {Customer} from './customer';
-import { RouteParams } from '@angular/router-deprecated';
+import {OnActivate, RouteSegment} from '@angular/router';
 import {CustomerService} from './customer.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'customer-detail',
-  templateUrl: 'app/customer-detail.component.html'
+  templateUrl: 'customer-detail.component.html'
 })
 
-export class CustomerDetailComponent implements OnInit {
+export class CustomerDetailComponent implements OnActivate {
   @Input() customer: Customer;
   @Output() close = new EventEmitter();
   error: any;
   navigated = false; // true if navigated here
   constructor(
-    private customerService: CustomerService,
-    private routeParams: RouteParams) {
+    private customerService: CustomerService) {
   }
 
-  ngOnInit() {
-    if (this.routeParams.get('id') !== null) {
-      let id = +this.routeParams.get('id');
+  routerOnActivate(curr:RouteSegment):void {
+    const id = curr.getParam('id');
+    if (id !== null) {
+      //let id = +id;
       this.navigated = true;
-      this.customerService.getCustomer(id).then(customer => this.customer = customer);
+      this.customerService.getCustomer(+id).then(customer => this.customer = customer);
     } else {
       this.navigated = false;
       this.customer = new Customer();
     }
-
   }
 
   save() {

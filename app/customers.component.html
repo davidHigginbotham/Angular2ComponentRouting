@@ -1,0 +1,9 @@
+<h1>{{title}}</h1>
+<h2>Customers</h2>
+<ul class="customers">
+  <li *ngFor="let customer of customers" [class.selected]="customer === selectedCustomer">
+    <span class="detail">{{customer.id}}</span> {{customer.firstName}} {{customer.lastName}} <a  [routerLink]="['/customer-detail', customer.id]">View</a>
+    <button class="delete-button" (click)="delete(customer, $event)">Delete</button>
+  </li>
+</ul>
+<a [routerLink]="['/customer-detail',null]">Add New Customer</a>
